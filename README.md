@@ -1,72 +1,98 @@
-Stock Price Prediction with LSTM
-This project demonstrates how to predict the stock price of a company using the LSTM (Long Short-Term Memory) model, a type of recurrent neural network. The model predicts the next day's closing price based on historical stock data.
+# 📈 LSTM Stock Price Prediction
 
-Libraries Used
-yfinance: Used to download stock data from Yahoo Finance.
+This project uses a Long Short-Term Memory (LSTM) neural network to predict stock prices based on historical data. The implementation focuses on predicting the next day's closing price for Turkish Airlines (THYAO) stock using the previous 60 days of trading data.
 
-pandas: Data manipulation and preparation.
+## ✨ Features
 
-numpy: Used for numerical operations and array manipulations.
+- 🔄 Downloads historical stock data using Yahoo Finance API
+- 🧹 Handles missing values and performs data preprocessing
+- 📊 Scales data for optimal neural network performance
+- 🧠 Implements LSTM architecture for time series forecasting
+- 🔮 Predicts the next day's closing price
 
-sklearn: Data scaling using MinMaxScaler.
+## 🛠️ Technologies & Libraries
 
-tensorflow.keras: LSTM model construction and training.
+- **Python 3.x**
+- **TensorFlow/Keras**: For building and training the LSTM model
+- **yfinance**: For downloading stock data from Yahoo Finance
+- **pandas**: For data manipulation and preprocessing
+- **numpy**: For numerical operations
+- **scikit-learn**: For data scaling using MinMaxScaler
 
-Installation
-Install the required libraries using pip:
+## 🔧 Installation
 
-bash
-Kopyala
-Düzenle
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/lstm-stock-prediction.git
+cd lstm-stock-prediction
+```
+
+2. Create a virtual environment (optional but recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install the required dependencies:
+```bash
 pip install yfinance pandas numpy scikit-learn tensorflow
-How to Run
-Run the Python script from the terminal or command line:
+```
 
-bash
-Kopyala
-Düzenle
+## 🚀 Usage
+
+Run the main script to fetch data, train the model, and predict the next day's stock price:
+
+```bash
 python stock_price_prediction.py
-Code Explanation
-Stock Data Download:
+```
 
-The script fetches stock data for a given ticker symbol (e.g., THYAO.IS) from Yahoo Finance. If the primary ticker fails, it tries alternative tickers (e.g., THYAO, THYAO.BIST).
+By default, the script will:
+1. Download historical data for Turkish Airlines (THYAO) from Yahoo Finance
+2. Preprocess and scale the data
+3. Create and train an LSTM model on the historical closing prices
+4. Predict the next day's closing price
 
-Data Preprocessing:
+## 🔍 How It Works
 
-The missing values in the data are filled using the forward fill method.
+### Data Collection
+- The script fetches stock data from Yahoo Finance using the `yfinance` library
+- It tries different ticker symbols (THYAO.IS, THYAO, THYAO.BIST) to ensure data availability
 
-The closing prices are extracted and scaled to a range between 0 and 1 using MinMaxScaler.
+### Data Preprocessing
+- Missing values are filled using the forward fill method
+- The closing prices are extracted and scaled to a range between 0 and 1 using MinMaxScaler
 
-Data Preparation for LSTM:
+### LSTM Model
+- Sequences of 60 previous days' closing prices are created as input features
+- A two-layer LSTM model is constructed with 50 units in each layer
+- The model is trained to predict the next day's closing price
 
-The data is prepared for LSTM by creating sequences of 60 previous days' closing prices to predict the next day's closing price.
+### Prediction
+- The model uses the last 60 days of scaled data to predict the next day's price
+- The prediction is inverse-transformed to get the actual price value
 
-Model Construction:
+## 🔄 Extending the Project
 
-An LSTM model is created with two LSTM layers and one Dense output layer.
+To use this model with different stocks:
+- Change the ticker symbols in the `alternative_tickers` list
+- Adjust the `sequence_length` variable if you want to use a different time window
+- Modify the LSTM architecture or training parameters for potentially better results
 
-The model is compiled using the Adam optimizer and mean squared error loss.
+## 📊 Sample Output
 
-Model Training:
+```
+Veri çekiliyor: THYAO.IS...
+✅ Veri başarıyla alındı: THYAO.IS
+[...]
+📊 Bir sonraki günün tahmini kapanış fiyatı: XX.XX TL
+```
 
-The model is trained on the data for 10 epochs with a batch size of 32.
+## ⚠️ Limitations
 
-Prediction:
+- Stock price prediction is inherently challenging due to market volatility
+- The model only considers historical prices and doesn't factor in news, events, or other external factors
+- Performance may vary depending on market conditions and the specific stock
 
-The script uses the last 60 days of stock data to predict the next day's closing price.
+## 📝 License
 
-The predicted price is then scaled back to the original range (using inverse transformation).
-
-Output
-The predicted closing price for the next day is printed in Turkish Lira (TL).
-
-Example Output:
-Kopyala
-Düzenle
-📊 Bir sonraki günün tahmini kapanış fiyatı: 150.23 TL
-Customization
-Ticker Symbol: You can modify the script to use different ticker symbols for other stocks. Just change the value of alternative_tickers or pass a different ticker to the get_stock_data function.
-
-Sequence Length: You can change the sequence length (sequence_length = 60) to use a different number of previous days for prediction.
-
-Epochs and Batch Size: You can adjust the number of epochs and batch size based on your system and dataset size.
+This project is licensed under the MIT License - see the LICENSE file for details.
